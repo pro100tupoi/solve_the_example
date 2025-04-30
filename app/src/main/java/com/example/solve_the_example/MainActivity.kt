@@ -8,7 +8,6 @@ import android.widget.EditText
 import android.widget.TextView
 import kotlin.random.Random
 
-
 class MainActivity : AppCompatActivity() {
     private lateinit var exampleTextView: TextView
     private lateinit var answerEditText: EditText
@@ -24,6 +23,10 @@ class MainActivity : AppCompatActivity() {
     private var wrongAnswers = 0
     private var totalAnswers = 0
     private var currentAnswer = 0
+
+    // Более мягкие цвета
+    private val softGreen = Color.parseColor("#C8E6C9") // Светло-зеленый
+    private val softRed = Color.parseColor("#FFCDD2") // Светло-красный
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,15 +91,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkAnswer() {
-        val userAnswer = answerEditText.text.toString().toIntOrNull() ?: 0
+        val userAnswer = answerEditText.text.toString().toIntOrNull() ?: Int.MIN_VALUE
         totalAnswers++
 
         if (userAnswer == currentAnswer) {
             correctAnswers++
-            mainLayout.setBackgroundColor(Color.GREEN)
+            mainLayout.setBackgroundColor(softGreen)
         } else {
             wrongAnswers++
-            mainLayout.setBackgroundColor(Color.RED)
+            mainLayout.setBackgroundColor(softRed)
         }
 
         updateStatistics()
