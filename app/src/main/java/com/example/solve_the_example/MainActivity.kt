@@ -4,12 +4,13 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.graphics.Color
+import androidx.core.content.ContextCompat
 import com.example.solve_the_example.databinding.ActivityMainBinding
 import kotlin.random.Random
 
-lateinit var binding: ActivityMainBinding
-class MainActivity : AppCompatActivity() {
 
+class MainActivity : AppCompatActivity() {
+    lateinit var binding: ActivityMainBinding
     private var correctAnswers = 0
     private var wrongAnswers = 0
     private var totalAnswers = 0
@@ -17,7 +18,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         binding.startButton.setOnClickListener {
             generateExample()
@@ -52,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             if (divisors.isNotEmpty()) {
                 val divisor = divisors.random()
                 currentAnswer = num1 / divisor
-                binding.exampleTextView.text = "$num1 / $divisor = ______"
+                binding.exampleTextView.text = "$num1 / $divisor ="
             } else {
                 generateExample()
             }
@@ -74,10 +76,10 @@ class MainActivity : AppCompatActivity() {
 
         if (userAnswer == currentAnswer) {
             correctAnswers++
-            binding.mainLayout.setBackgroundColor(R.color.softGreen)
+            binding.mainLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.softGreen))
         } else {
             wrongAnswers++
-            binding.mainLayout.setBackgroundColor(R.color.softRed)
+            binding.mainLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.softRed))
         }
 
         updateStatistics()
