@@ -69,19 +69,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("ResourceAsColor")
     private fun checkAnswer() {
         val userAnswer = binding.answerEditText.text.toString().toIntOrNull() ?: Int.MIN_VALUE
         totalAnswers++
 
         if (userAnswer == currentAnswer) {
             correctAnswers++
-            binding.mainLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.softGreen))
+            binding.mainLayout.setBackgroundColor(
+                resources.getColor(R.color.softGreen, theme))
         } else {
             wrongAnswers++
-            binding.mainLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.softRed))
+            binding.mainLayout.setBackgroundColor(
+                resources.getColor(R.color.softRed, theme))
         }
-
         updateStatistics()
     }
 
