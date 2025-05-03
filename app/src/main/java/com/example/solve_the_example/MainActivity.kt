@@ -1,61 +1,44 @@
 package com.example.solve_the_example
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.graphics.Color
+import android.view.inputmethod.InputBinding
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import com.example.solve_the_example.databinding.ActivityMainBinding
 import kotlin.random.Random
 
+lateinit var binding: ActivityMainBinding
 class MainActivity : AppCompatActivity() {
-    private lateinit var exampleTextView: TextView
-    private lateinit var answerEditText: EditText
-    private lateinit var checkButton: Button
-    private lateinit var startButton: Button
-    private lateinit var resultTextView: TextView
-    private lateinit var resultRightTextView: TextView
-    private lateinit var resultNotRightTextView: TextView
-    private lateinit var percentageTextView: TextView
-    private lateinit var mainLayout: androidx.constraintlayout.widget.ConstraintLayout
-
     private var correctAnswers = 0
     private var wrongAnswers = 0
     private var totalAnswers = 0
     private var currentAnswer = 0
 
-    // Более мягкие цвета
-    private val softGreen = Color.parseColor("#C8E6C9") // Светло-зеленый
-    private val softRed = Color.parseColor("#FFCDD2") // Светло-красный
+    private val softGreen = Color.parseColor("#C8E6C9")
+    private val softRed = Color.parseColor("#FFCDD2")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        exampleTextView = findViewById(R.id.exampleTextView)
-        answerEditText = findViewById(R.id.answerEditText)
-        checkButton = findViewById(R.id.checkButton)
-        startButton = findViewById(R.id.startButton)
-        resultTextView = findViewById(R.id.Result)
-        resultRightTextView = findViewById(R.id.ResultRight)
-        resultNotRightTextView = findViewById(R.id.ResultNot_right)
-        percentageTextView = findViewById(R.id.Percentage_of_correct_answers)
-        mainLayout = findViewById(R.id.mainLayout)
-
-        startButton.setOnClickListener {
+        binding.startButton.setOnClickListener {
             generateExample()
-            startButton.isEnabled = false
-            checkButton.isEnabled = true
-            answerEditText.isEnabled = true
-            answerEditText.text.clear()
-            mainLayout.setBackgroundColor(Color.WHITE)
+            binding.startButton.isEnabled = false
+            binding.checkButton.isEnabled = true
+            binding.answerEditText.isEnabled = true
+            binding.answerEditText.text.clear()
+            binding.mainLayout.setBackgroundColor(Color.WHITE)
         }
 
-        checkButton.setOnClickListener {
+        binding.checkButton.setOnClickListener {
             checkAnswer()
-            checkButton.isEnabled = false
-            answerEditText.isEnabled = false
-            startButton.isEnabled = true
+            binding.checkButton.isEnabled = false
+            binding.answerEditText.isEnabled = false
+            binding.startButton.isEnabled = true
         }
     }
 
@@ -75,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             if (divisors.isNotEmpty()) {
                 val divisor = divisors.random()
                 currentAnswer = num1 / divisor
-                exampleTextView.text = "$num1 / $divisor = ______"
+                binding.exampleTextView.text = "$num1 / $divisor = ______"
             } else {
                 generateExample() // Повторная генерация, если нет подходящих делителей
             }
@@ -86,35 +69,36 @@ class MainActivity : AppCompatActivity() {
                 "*" -> num1 * num2
                 else -> 0
             }
-            exampleTextView.text = "$num1 $operator $num2 = ______"
+            binding.exampleTextView.text = "$num1 $operator $num2 = "
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun checkAnswer() {
-        val userAnswer = answerEditText.text.toString().toIntOrNull() ?: Int.MIN_VALUE
+        val userAnswer = binding.answerEditText.text.toString().toIntOrNull() ?: Int.MIN_VALUE
         totalAnswers++
 
         if (userAnswer == currentAnswer) {
             correctAnswers++
-            mainLayout.setBackgroundColor(softGreen)
+            binding.mainLayout.setBackgroundColor(R.color.softGreen)
         } else {
             wrongAnswers++
-            mainLayout.setBackgroundColor(softRed)
+            binding.mainLayout.setBackgroundColor(R.color.softRed)
         }
 
         updateStatistics()
     }
 
     private fun updateStatistics() {
-        resultTextView.text = totalAnswers.toString()
-        resultRightTextView.text = correctAnswers.toString()
-        resultNotRightTextView.text = wrongAnswers.toString()
+        binding.Result.text = totalAnswers.toString()
+        binding.ResultRight.text = correctAnswers.toString()
+        binding.ResultNotRight.text = wrongAnswers.toString()
 
         val percentage = if (totalAnswers > 0) {
             String.format("%.2f", (correctAnswers.toDouble() / totalAnswers) * 100)
         } else {
             "0.00"
         }
-        percentageTextView.text = "$percentage%"
+        binding.PercentageOfCorrectAnswers.text = "$percentage%"
     }
 }
