@@ -4,22 +4,16 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.graphics.Color
-import android.view.inputmethod.InputBinding
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import com.example.solve_the_example.databinding.ActivityMainBinding
 import kotlin.random.Random
 
 lateinit var binding: ActivityMainBinding
 class MainActivity : AppCompatActivity() {
+
     private var correctAnswers = 0
     private var wrongAnswers = 0
     private var totalAnswers = 0
     private var currentAnswer = 0
-
-    private val softGreen = Color.parseColor("#C8E6C9")
-    private val softRed = Color.parseColor("#FFCDD2")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                 currentAnswer = num1 / divisor
                 binding.exampleTextView.text = "$num1 / $divisor = ______"
             } else {
-                generateExample() // Повторная генерация, если нет подходящих делителей
+                generateExample()
             }
         } else {
             currentAnswer = when (operator) {
