@@ -1,13 +1,10 @@
 package com.example.solve_the_example
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.graphics.Color
-import androidx.core.content.ContextCompat
 import com.example.solve_the_example.databinding.ActivityMainBinding
 import kotlin.random.Random
-
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
