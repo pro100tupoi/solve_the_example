@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
             binding.checkButton.isEnabled = true
             binding.answerEditText.isEnabled = true
             binding.answerEditText.text.clear()
-            binding.mainLayout.setBackgroundColor(Color.WHITE)
         }
 
         binding.checkButton.setOnClickListener {
